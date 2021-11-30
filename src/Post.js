@@ -41,14 +41,6 @@ function Post({ postId, username, caption, imageUrl, user }) {
     setComment("");
   };
 
-  const deleteComment = (id) => {
-    db.collection("posts").doc(postId).collection("comments").doc(id).delete();
-  };
-
-  const deletePost = () => {
-    db.collection("posts").doc(postId).delete();
-  };
-
   return (
     <div className="post">
       <div className="post__header">
@@ -60,13 +52,7 @@ function Post({ postId, username, caption, imageUrl, user }) {
           />
           <h3>{username}</h3>
         </div>
-        {username === user?.displayName ? (
-          <button className="post__deletePost" onClick={deletePost}>
-            x
-          </button>
-        ) : (
-          <div></div>
-        )}
+        
       </div>
 
       <img className="post__image" src={imageUrl} alt="" />
@@ -78,16 +64,6 @@ function Post({ postId, username, caption, imageUrl, user }) {
       <div className="post__comments">
         {comments.map(({ id, comment }) => (
           <div className="post__comment">
-            {comment.username === user?.displayName ? (
-              <button
-                className="post__deleteComment"
-                onClick={() => deleteComment(id)}
-              >
-                X
-              </button>
-            ) : (
-              <div></div>
-            )}
             <p>
               <strong>{comment.username}</strong> {comment.text}
             </p>
